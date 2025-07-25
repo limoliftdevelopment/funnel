@@ -3,11 +3,22 @@
 import { useState, useEffect } from 'react'
 import { CheckIcon, XMarkIcon, ChartBarIcon } from '@heroicons/react/24/solid'
 
+interface Response {
+  question: string;
+  answer: string;
+  weight: number;
+}
+
+interface UserDetails {
+  firstName?: string;
+  [key: string]: any;
+}
+
 export default function EmotionalQuizPage() {
-  const [responses, setResponses] = useState([])
+  const [responses, setResponses] = useState<Response[]>([])
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [showResults, setShowResults] = useState(false)
-  const [userDetails, setUserDetails] = useState({})
+  const [userDetails, setUserDetails] = useState<UserDetails>({})
   const [painScore, setPainScore] = useState(0)
 
   useEffect(() => {
@@ -66,7 +77,7 @@ export default function EmotionalQuizPage() {
     }
   ]
 
-  const handleResponse = (optionIndex) => {
+  const handleResponse = (optionIndex: number) => {
     const newResponse = {
       question: questions[currentQuestion].text,
       answer: questions[currentQuestion].options[optionIndex],
@@ -94,7 +105,7 @@ export default function EmotionalQuizPage() {
     }
   }
 
-  const getPainLevel = (score) => {
+  const getPainLevel = (score: number) => {
     if (score <= 15) return { level: "Low", color: "text-green-400", message: "You're doing well, but there's room for growth!" }
     if (score <= 30) return { level: "Moderate", color: "text-yellow-400", message: "Some pain points are affecting your business." }
     if (score <= 45) return { level: "High", color: "text-orange-400", message: "Significant challenges are hurting your growth." }
